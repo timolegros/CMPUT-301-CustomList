@@ -1,6 +1,7 @@
 package com.example.simpleparadox.listycity;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CustomList extends ArrayAdapter<City> {
 
@@ -70,6 +73,20 @@ public class CustomList extends ArrayAdapter<City> {
      * @param city
      */
     public Boolean hasCity(City city) {
-        return false;
+        return cities.contains(city);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomList that = (CustomList) o;
+        return cities.equals(that.cities);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(cities);
     }
 }
